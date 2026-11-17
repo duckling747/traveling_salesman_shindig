@@ -1,0 +1,28 @@
+cabal-version:      3.14
+name:               travelingsalesman
+version:            0.1.0.0
+license:            NONE
+author:             Arttu Mykkänen
+maintainer:         arttu.mykkanen@outlook.com
+category:           Math
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+
+common dibbledabble
+    ghc-options: -Wall -threaded
+
+executable travelingsalesman
+    import:           dibbledabble
+    main-is:          Main.hs
+
+    build-depends:    base >= 4.21.2.0,
+        random,
+        containers,
+        vector,
+        fgl,
+        split,
+        MonadRandom,
+
+    hs-source-dirs:   app
+
+    default-language: GHC2024

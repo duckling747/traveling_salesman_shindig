@@ -1,0 +1,47 @@
+packages: .
+
+optimization: 2
+executable-stripping: True
+split-sections: True
+-- executable-dynamic: True
+
+
+if os(freebsd)
+  program-options
+    -- Activates native CPU vector math and fast bit manipulation directly inside GHC's assembler.
+    ghc-options:
+      -mavx2
+      -mbmi2
+      -msse4.2
+      -fexcess-precision
+      -funbox-strict-fields
+      -Wall
+      -Wcompat
+      -Wincomplete-uni-patterns
+      -Wincomplete-record-updates
+      -Widentities
+      -Wredundant-constraints
+      -Wunused-top-binds
+
+    gcc-options:
+      -march=znver3
+      -O3
+
+if os(osx)
+  program-options
+    -- Apple Silicon uses an advanced internal ARM AArch64 code generator.
+    -- We skip raw x86 vector strings and apply native Mach-O dead strip linking rules.
+    ghc-options:
+      -fexcess-precision
+      -funbox-strict-fields
+      -optl-Wl,-dead_strip
+      -Wall
+      -Wcompat
+      -Wincomplete-uni-patterns
+      -Wincomplete-record-updates
+      -Widentities
+      -Wredundant-constraints
+      -Wunused-top-binds
+
+    gcc-options:
+      -O3
